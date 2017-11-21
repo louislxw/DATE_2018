@@ -1,0 +1,99 @@
+%!TEX root=../draft.tex
+%\vspace{-6pt}
+\section{Related Work}
+\label{ch2_related_work}
+
+%A number of approaches have been developed to implement TMFU-TMN Overlays, ranging from simple processors to highly configurable logic arrays.
+%In a nutshell, these overlays can be implemented as soft processors~\cite{cheah2012idea,laforest2012octavo,gray2016grvi}, vector processors~\cite{severance2013embedded}, coarse-grained reconfigurable arrays~\cite{brant2013coarse,paul2012remorph,liu2013soft,rashid2014comparing}, and GPU-like overlays~\cite{al2016fgpu}.
+
+Overlays come in many forms, with the most common being spatially configured~\cite{jain2016deco, coole2010intermediate} and time multiplexed (TM)~\cite{severance2013embedded, liu2013soft}. 
+Spatially configured overlays fully unroll the kernel onto a pipelined array of FUs, resulting in an initiation interval (II) of 1.
+They provide high performance, but require significant FPGA resources. 
+TM overlays change their behavior on a cycle by cycle basis, thus reducing the amount of FPGA resource dedicated to the functional unit (FU) and interconnect, but at the cost of a higher II and hence a reduced throughput. 
+
+%The most successful TM overlays are based on soft processors.
+%, such as CPUs~\cite{laforest2012octavo, nios2009processor}, vector processors~\cite{severance2013embedded} and GPU-like architectures~\cite{al2016fgpu}. 
+%The most successful TM overlays are based on soft processors, such as CPUs~\cite{laforest2012octavo, nios2009processor, al2012guppy}, vector processors~\cite{severance2013embedded} and GPU-like architectures~\cite{al2016fgpu}. Guppy is GPU-like??? Anyway delete it. Have enough.
+%But they are normally conventional processing elements.
+%Examples of some of the more performance oriented soft processor solutions include:
+Most successful TM overlays are based on soft processors. 
+The more performance oriented ones include, SIMD Octavo~\cite{laforest2017microarchitectural}, VectorBlox MXP~\cite{severance2013embedded} and VLIW TILT~\cite{Ovtcharov2013TILT}. A massively parallel overlay, called GRVI Phalanx~\cite{gray2016grvi}, based on the RISC-V processor and the Hoplite NOC~\cite{kapre2015hoplite} mapped 1680 RISC-V cores onto an UltraScale+ VU9P.
+These overlays have the advantage of a well-known, well-designed ISA which makes them easy to use, however, they utilize a large amount of FPGA resource and have a significant power consumption.
+
+\begin{comment}
+%Octavo
+The Octavo soft processor~\cite{laforest2012octavo}, which is a multi-threaded 10-stage pipelined architecture designed to operate at the maximum frequency of the Block RAMs (550MHz) on a Stratix IV FPGA. 
+The Octavo was further extended to support SIMD by duplicating the datapath with a shared instruction stream~\cite{laforest2017microarchitectural}. 
+VectorBlox MXP~\cite{severance2013embedded} is a soft vector processor with fracturable ALUs that can support 8-bit to 32-bit fixed-point operations. 
+Increasing the number of vector lanes in MXP results in very high FPGA resource utilization and significant clock frequency degradation.
+SIMD-Octavo was compared with VectorBlox MXP~\cite{severance2013embedded} and operates at about double the clock frequency of MXP and generally achieves better performance (for an equal number of lanes), in terms of execution time, area and area-delay product. The execution time of multi-lane SIMD-Octavo is better than hand-crafted Verilog HDL, but requires one to two orders of magnitude more hardware resource. 
+%overlay with 32 lanes achieves up to 8.7$\times$ speedup on throughput within 32 lanes, it suffers up to 319$\times$ area overhead.
+
+%TILT
+TILT~\cite{Ovtcharov2013TILT} is a VLIW soft processor with deeply-pipelined floating-point FUs targeting Stratix IV FPGAs.
+An 8-core TILT system consumed approximately 12K eALMs, fractionally more than Octavo and slightly less than MXP, while operating at just above 200MHz (about the same as MXP).
+TILT~\cite{rashid2014comparing} achieved about half the compute density of implementations mapped directly to the FPGA using OpenCL HLS.
+
+
+%GRVI Phalanx
+GRVI Phalanx~\cite{gray2016grvi} is a massively parallel overlay based on an FPGA-efficient implementation of the RISC-V soft processor. The GRVI processor uses just 320 LUTs and runs at a frequency of up to 375MHz on a Kintex UltraScale FPGA. Multiple GRVI processors with shared memory and local interconnect, are formed as clusters, which efficiently communicate with each other via a Hoplite NOC~\cite{kapre2015hoplite}. Implementations with 400 and 1680 RISC-V cores on a Kintex UltraScale KU040 and a Virtex UltraScale+ VU9P have been reported. Currently there is minimum tool support for this platform with no application performance comparisons with other overlays. 
+
+
+%MXP
+%VectorBlox MXP~\cite{severance2013embedded} is a soft vector processor with fracturable ALUs that can support 8-bit to 32-bit fixed-point operations. 
+%Increasing the number of vector lanes in MXP results in very high FPGA resource utilization and significant clock frequency degradation.
+%
+%MXP can operate at over 200 MHz on a Stratix IV device with less than 16 vector lanes. 
+%%A 64-lane configuration demonstrated up to 918$\times$ speedup in comparison with Nios II processor on matrix multiplication.
+%However, the scalability of SVPs is limited by the number of vector lanes (A maximum of 32-lane vector engine can be mapped on Cyclone IV-115). 
+%While increasing the number of vector lanes introduces intensive resource consumption, it also leads to clock frequency degradation.
+
+%FGPU (not a performance overlay, so removed).
+%FGPU~\cite{al2016fgpu} is a soft GPU-like overlay ???  was proposed as a flexible solution for software tasks.
+%It achieves up to 48.5$\times$ speedup over the MicroBlaze on ZC706 FPGA board, at the penalty of 17.7$\times$ area overhead.
+%However, the FGPU is designed with a massive pipeline of 18 stages to fulfill the high performance.
+%Due to the intensive complexity of the compute units, even the FGPU with only 8 CUs consumes 124K LUTs on z7045 Zynq, which corresponds to 57\% of the available resource.
+\end{comment}
+
+An alternative solution is to build arrays of customized TM FUs and interconnect on the FPGA, similar to CGRAs~\cite{mei2003adres}. 
+%They are generally highly pipelined ALUs/PEs, along with an array based interconnect. 
+%I do not think this is necessary%%The CGRA-like overlays have been proved to be a suitable solution for compute intensive loop acceleration~\cite{liu2015quickdough}.
+A number of different interconnect styles for connecting between FUs can be used, with the most common being: island style~\cite{coole2010intermediate, jain2015efficient}, nearest neighbor~\cite{paul2012remorph, liu2013soft} and to a lesser extent linear interconnect~\cite{capalija2011towards, jain2016deco}.
+%or having no interconnection~\cite{rashid2014comparing}.
+The overhead of the interconnect network, particularly for island style and nearest neighbor interconnects, contribute to a significant FPGA resource utilization.
+%caused by the flexible routing network still remains a problem to be solved~\cite{coole2010intermediate}. 
+Examples of CGRA-like TM overlays include:
+
+
+
+%CARBON
+CARBON~\cite{brant2013coarse}, a CGRA-like overlay implemented as a 2$\times$2 array of tiles on a Stratix III FPGA. Each CARBON tile has an FU with a programmable ALU and instruction memory, supporting up to 256 instructions. 
+%An FU consumed 3K ALMs, 304 FFs, 15.6K BRAM bits and 4 DSP blocks, achieving a modest 90 MHz operating frequency.
+CARBON has a large FU resource requirement with a relatively slow speed which limits its scalability, compared to the overlays discussed below.
+
+
+%SCGRA
+The SCGRA overlay~\cite{liu2013soft} was proposed to address FPGA design productivity issues. 
+Application specific SCGRA overlays were implemented on Zynq~\cite{liu2015quickdough}, achieving a speedup of up to 9$\times$ compared to the same application running on the Zynq ARM processor. 
+The 250 MHz FU consists of an ALU, multiport data memory (256$\times$32 bits) and customizable depth instruction ROM (Supporting 72-bit instructions) resulting in significant BRAM utilization. 
+Fast application context switching is not possible as the full FPGA bitstream needs to be reconfigured for a compute kernel change.
+
+
+%reMORPH
+The reMORPH overlay~\cite{paul2012remorph} better targets the FPGA fabric, with an FU consuming 1 DSP Block, 3 block RAMs, 196 LUTs and 41 registers.
+To reduce overhead, the reMORPH FU does not use decoders resulting in a 72-bit instruction memory (supporting up to 512 instructions) which also over utilizes the BRAMs.
+reMORPH uses a nearest neighbor style of non-programmable interconnect, which is adapted using partial reconfiguration at runtime, and hence, suffers from the same slow hardware context switch problem as SCGRA.
+
+
+Many TM overlays have large area overheads due to the routing resources, or large instruction storage requirements.
+%, which along with their use of partial reconfiguration results in a long kernel context switch time. 
+To address these problems, we propose a streaming architecture based on feed-forward pipelined datapaths, as streaming based accelerators have been highly successful when implemented in FPGAs~\cite{oliver2005reconfigurable, saqib2015pipelined}. Targeting highly compute intensive algorithms with little control and relatively simple dependencies allows us to use a linear interconnect structure, where data flows in a single direction from one FU to the next, thus minimizing the interconnect requirements. This structure then enables the use of a very simple and efficient streaming memory interface. The instruction storage is also reduced, as the architecture allows us to store just those instructions used by an individual FU. The reduced instruction and control requirements means that a lightweight processor architecture can be used, similar to the DSP based iDEA processor~\cite{cheah2012idea}, further reducing the hardware resource requirements while achieving a relatively high operating frequency.
+
+\begin{comment}
+Most of the time multiplexed overlays described above suffer from large area overheads due to the routing resources, or the large instruction storage requirements.
+%, which along with their use of partial reconfiguration results in a long kernel context switch time. 
+To address these issues, we propose a streaming architecture based on feed-forward pipelined datapaths, as accelerators based on the streaming model have been highly successful when implemented in FPGAs~\cite{oliver2005reconfigurable, saqib2015pipelined}. Targeting highly compute intensive algorithms with little control and relatively simple dependencies allows us to use a simple linear interconnect structure, where data flows in a single direction from one FU to the next, thus minimizing the interconnect requirements. This structure then enables the use of a very simple and efficient streaming memory interface. The instruction storage is also reduced, as the architecture allows us to store just those instructions used by an individual FU. The reduced instruction and control requirements means that a lightweight processor architecture can be used, similar to the DSP based iDEA processor~\cite{cheah2012idea}, further reducing the hardware resource requirements while achieving a relatively high operating frequency.
+\end{comment}
+
+% possibly include contributions in bullet form
+% possibly mention organisation

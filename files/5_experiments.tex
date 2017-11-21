@@ -1,0 +1,56 @@
+%!TEX root=../draft.tex
+\section{Experimental Evaluation}
+\label{ch5_experiments}
+
+We compare the performance of our linear TM overlays using a set of compute kernels from~\cite{jain2015efficient,binipolynomial}, as shown in Table~\ref{benchmarks}.
+The V1 (1 DSP, no WB), V2 (2 DSP, no WB), V3 (WB, IWP=5) and V4 (WB, IWP=4) overlays are compared to the overlay in~\cite{li2016area}. 
+V1, V2 and the overlay in~\cite{li2016area} have a depth equal to the critical path, and are configured on a kernel by kernel basis, while V3 and V4 have a fixed depth of eight. 
+All overlays are implemented on a Zynq XC7Z020.
+
+The FPGA DSP and logic slice utilization, and operating frequency, for different depth V1 and V2 overlays are shown in Fig.~\ref{scalability} (V3 and V4 are not included in this figure as they have a fixed depth). A depth 8 V1 overlay consumes 654 logic slices and 8 DSP slices which represents less than 5\% of the logic and DSP resources on Zynq. The depth 8 V2 overlay consumes 893 logic slices and 16 DSP blocks or less than 8\% of the Zynq resources. 
+By comparison, the fixed depth (of 8) V3 (and V4) overlay consumes 814 (817) logic slices, 8 (8) DSP slices and operates at a frequency of 286MHz (233MHz).
+
+The DFG characteristics (number of I/O, number of arithmetic operations and graph depth) for the chosen benchmarks and the II achieved when mapped to the various overlays are shown in Table~\ref{benchmarks}. For the first three benchmarks, which have a depth $\leq$ 8, ASAP scheduling is used to map to the V3 and V4 overlays, and thus, the II is the same as for the V1 overlay. 
+The V1 (V2) overlay has an average 42\% (71\%) reduction in the II, compared to~\cite{li2016area}.
+The V3 (V4) overlay has an average 34\% (40\%) reduction in the II for the depth $>$ 8 benchmarks.
+%with depth $>$ 8, compared to~\cite{li2016area}.
+
+\begin{comment}
+Among the feed-forward only overlays such as~\cite{li2016area}, V1, and V2, their requirement for the number of FUs is determined by the graph depth of each benchmark. 
+The II is high for benchmarks with a large number of I/O nodes and high parallelism, where parallelism stands for the average number of operations per schedule stage.
+It can be used to roughly measure the throughput, as all the three overlays run at a frequency with a slight degradation from around 330MHz to 300MHz on Zynq XC7Z020, as shown in Fig.~\ref{fmax}. 
+According to Table~\ref{benchmarks} and Fig.~\ref{resources}, V1 generally reduces the II into half with almost the same resource consumption as~\cite{li2016area}, and V2 further achieves down to a quarter with an incremental area overhead.
+As there are no loop carried dependencies, we can replicate multiple streaming models as in Fig.~\ref{pipelines} to reduce the II into a theoretical minimum of 1.
+\end{comment}
+
+\input{tables/benchmarks_II}
+
+\input{figures_tex/resource_usage_and_fmax_graph}
+
+
+Fig.~\ref{throughput_latency} shows the throughput and latency of the different overlays for the benchmarks given in Table~\ref{benchmarks}. 
+In terms of throughput, all overlays have a higher throughput than the overlay of~\cite{li2016area}. This is because interleaving data transfer with execution reduces the II and hence improves throughput.
+The two DSP V2 overlay has approximately twice the throughput as the V1 overlay, but also requires twice the data bandwidth. The size of both of these overlays is dependant on the depth (critical path) of the application kernel's DFG, and needs to be reconfigured when the application kernel changes.
+A depth 8 V1 (V2) overlay requires a minimum reconfigurable region of 7 (9) CLB tiles and 1 (2) DSP tile with a configuration time of 0.73 (1.02) ms using the processor configuration access port (PCAP). Additionally, the overlays require a further 0.29$\mu s$ to load the configuration data for the largest benchmark.
+
+The single DSP V3 overlay has a throughput similar to the V1 overlay, with an average reduction of just 10\%. The V4 overlay has a slightly reduced throughput as it operates at a lower frequency due to the removal of pipeline registers to reduce the IWP.
+The V3 and V4 overlays both have a fixed depth (in these experiments a depth of 8 is used).
+Adding write-back capabilities allows larger kernels to be mapped to a smaller number of FUs, removing the requirement that the overlay depth must be the same as the kernel critical path. This eliminates the need to reconfigure the overlay when the application kernel changes, making the overlay more general purpose (but requiring a different scheduling strategy).
+Thus, a hardware context switch on the V3 overlay requires just 0.25$\mu s$ for the largest benchmark, representing a 2900$\times$ reduction compared to the V1 overlay.
+
+The latency is heavily dependent on the depth of the overlay. For the V1 and V2 overlays and the overlay of~\cite{li2016area}, the overlay depth is equal to the DFG depth, due to the ASAP scheduling strategy used, and hence these overlays all have a larger latency. The V3 and V4 overlays generally show a significant reduction in the latency, particularly for larger depth DFGs, due to the fixed overlay depth. 
+
+
+
+\input{figures_tex/throughput_latency}
+
+\begin{comment}
+To demonstrate the benefits of the proposed linear TM overlays, we compare different versions of the linear TM overlays with one of the more efficient spatially configured overlays from the literature~\cite{jain2015efficient}.
+For all the implementations we use the minimal number of FUs/hardware for the benchmark implementations, except for V4 with a fix architecture of 8 FUs.
+This is to observe the effect of FU reduction on the area requirement, and the benefit of mapping all the benchmarks without overlay reconfiguration.
+Fig.~\ref{fu_comparison} shows the number of FUs required for the linear TM overlay V1/V2 compared to that of the spatially configured overlay in~\cite{jain2015efficient} for each of the benchmarks in Table~\ref{benchmarks}. 
+There is a significant reduction in the number of FUs required for V1/V2, but at the expense of an increase in the II compared to~\cite{jain2015efficient}. 
+The most remarkable advantage of V4 is that it can handle all the benchmarks regardless of the graph depth, which significantly reduce the context switch time for different compute kernels.
+
+%\input{figures_tex/fu_comparison}
+\end{comment}

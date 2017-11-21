@@ -1,0 +1,141 @@
+\pgfplotsset{
+	axis background/.style={fill=white},
+	tick style=black,
+	tick label style=black,
+	grid=both,
+	xtick pos=left,
+	ytick pos=left,
+	tick style={
+		major grid style={style=white,line width=1pt},minor grid style=white,
+		tick align=outside,
+	},
+	minor tick num=4,
+}
+
+\begin{figure}[tb]
+	\centering
+	\begin{subfigure}[]{0.5\textwidth}
+		\centering
+		\pgfplotstableread{
+			0		0.35	0.53	1.00	0.50	0.43
+			1		0.29	0.50	0.94	0.46	0.38 
+			2		0.40	0.69	1.30	0.65	0.53
+			3		0.42	0.68	1.29	0.64	0.52
+			4		0.43	0.74	1.40	0.70	0.57
+			5		0.53	0.93	1.80	0.97	0.85
+			6		0.49	0.80	1.55	0.56	0.53 
+			7		0.46	0.79	1.53	0.57	0.53
+		}\datathroughput
+		\begin{tikzpicture}
+		\centering
+		\begin{axis}[ybar=0pt,
+		width=17cm,
+		x = 0.85cm,
+		height=4.3cm,
+		ymin=0,
+		ymax=2,        
+		ylabel={Throughput (GOPS)},
+		grid style={dotted,gray},
+		ymajorgrids=true,
+		%	nodes near coords,    
+		xtick=data,
+		bar width = 0.15,
+		xticklabels = {
+			\strut 1,
+			\strut 2,
+			\strut 3,
+			\strut 4,
+			\strut 5,
+			\strut 6,
+			\strut 7,
+			\strut 8                                   
+		},
+		x tick label style={rotate=45, anchor=north east, inner sep=0mm},
+		major x tick style = {opacity=0},
+		minor x tick num = 1,
+		minor tick length=1ex,
+		%	every node near coord/.append style={
+		%		anchor=west,
+		%		rotate=90,
+		%		font=\tiny
+		%	},
+		]
+		
+		\addplot[draw=black,fill=blue, draw opacity=1] table[x index=0,y index=1] \datathroughput;\label{T_olaf}
+		\addplot[draw=black,fill=red, draw opacity=1] table[x index=0,y index=2]   \datathroughput;\label{T_V1} 
+		\addplot[draw=black,fill=green, draw opacity=1] table[x index=0,y index=3] \datathroughput;\label{T_V2} 
+		\addplot[draw=black,fill=yellow, draw opacity=1] table[x index=0,y index=4] \datathroughput;\label{T_V3} 
+		\addplot[draw=black,fill=cyan, draw opacity=1] table[x index=0,y index=5]  \datathroughput;\label{T_V4} 
+		
+		\end{axis}
+		\node [draw=none, fill=white] at (rel axis cs: 0.55,1.2) {\shortstack[l]{
+				\ref{T_olaf}~\cite{li2016area} \ref{T_V1} V1 \ref{T_V2} V2} \ref{T_V3} V3 \ref{T_V4} V4};	
+		\end{tikzpicture}
+%		\caption{Throughput in GOPS.}
+		\label{throughput}
+	\end{subfigure}
+	
+	\begin{subfigure}[]{0.5\textwidth}
+		\centering
+		\pgfplotstableread{
+			0		116	116	123	105	129
+			1		143	139	154	105	129
+			2		235	235	249	147	181
+			3		198	198	210	151	181
+			4		248	248	263	165	198
+			5		373	385	396	200	224
+			6		400	424	436	231	258
+			7		320	330	340	203	237
+		}\datalatency
+		\begin{tikzpicture}
+		\centering
+		\begin{axis}[ybar=0pt,
+		width=17cm,
+		x = 0.85cm,
+		height=4.3cm,
+		ymin=0,
+		ymax=500,        
+		ylabel={Latency (ns)},
+		grid style={dotted,gray},
+		ymajorgrids=true,
+		%	nodes near coords,    
+		xtick=data,
+		bar width = 0.15,
+		xticklabels = {
+			\strut 1,
+			\strut 2,
+			\strut 3,
+			\strut 4,
+			\strut 5,
+			\strut 6,
+			\strut 7,
+			\strut 8                                   
+		},
+		x tick label style={rotate=45, anchor=north east, inner sep=0mm},
+		major x tick style = {opacity=0},
+		minor x tick num = 1,
+		minor tick length=1ex,
+		%	every node near coord/.append style={
+		%		anchor=west,
+		%		rotate=90,
+		%		font=\tiny
+		%	},
+		]
+		
+		\addplot[draw=black,fill=blue, draw opacity=1] table[x index=0,y index=1] \datalatency;\label{L_olaf}
+		\addplot[draw=black,fill=red, draw opacity=1] table[x index=0,y index=2] \datalatency;\label{L_V1} 
+		\addplot[draw=black,fill=green, draw opacity=1] table[x index=0,y index=3] \datalatency;\label{L_V2} 
+		\addplot[draw=black,fill=yellow, draw opacity=1] table[x index=0,y index=4] \datalatency;\label{L_V3} 
+		\addplot[draw=black,fill=cyan, draw opacity=1] table[x index=0,y index=5] \datalatency;\label{L_V4} 
+		
+		\end{axis}
+%		\node [draw=none, fill=white] at (rel axis cs: 0.5,0.85) {\shortstack[l]{
+%				\ref{L_olaf}~\cite{li2016area}  \ref{L_V1} V1  \ref{L_V2} V2} \ref{L_V3} V3 \ref{L_V4} V4};	
+		\end{tikzpicture}
+%		\caption{Latency in ns.}
+		\label{latency}
+	\end{subfigure}
+	
+	\caption{Throughput and latency for the benchmarks.}
+	\label{throughput_latency}
+\end{figure}

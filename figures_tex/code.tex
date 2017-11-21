@@ -1,0 +1,256 @@
+\definecolor{light-gray}{gray}{0.95}
+\lstset{%
+	% Basic design
+	backgroundcolor=\color{light-gray},
+	basicstyle={\scriptsize\ttfamily},   
+	frame=l,
+	% Line numbers
+	xleftmargin={0.75cm},
+	numbers=left,
+	stepnumber=1,
+	firstnumber=1,
+	numberfirstline=true,
+	% Code design
+	identifierstyle=\color{black},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywordstyle=\color{greenCode}\bfseries,
+	stringstyle=\color{ocherCode}\ttfamily,
+	commentstyle=\color{darkgray}\ttfamily,
+	% Code
+	language={C},
+	tabsize=3,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	extendedchars=true,
+	breaklines=true
+}
+
+%\begin{table}[!h]
+%	\centering
+%	\caption{Compute Kernel Code Descriptions}
+%	\label{code.tbl}
+%	\begin{tabular}{l}
+%	    \toprule
+%		\multicolumn{1}{c}{(a) C description}  \\%&\multicolumn{1}{c}{(b) DFG description} \\ % Assembly with Loopback Optimization
+%	    \midrule
+%		%    \hspace{-0.2in}
+%		\begin{lstlisting}
+%#define SQR(x) ((x)*(x))
+%for(int i=0;i<64;i++)
+%	for(int j=1;j<63;j++)
+%		for (int k=1;k<63;k++)
+%			b[i][j][k] =
+%				SQR(a[i][j][k] - a[i][j][k-1]) +
+%				SQR(a[i][j][k] - a[i][j][k+1]) +
+%				SQR(a[i][j][k] - a[i][j-1][k]) +
+%				SQR(a[i][j][k] - a[i][j+1][k]);
+%
+%		\end{lstlisting}
+%		
+%		\\
+%		\\
+%		\toprule
+%		\multicolumn{1}{c}{(b) Data Flow Graph}  \\
+%		\midrule
+%		%    \hspace{-0.2in}
+%		%\hfill
+%	\begin{tikzpicture}[>=latex',line join=bevel, scale = 0.4]
+%	\centering	
+%	%\small
+%	\tiny
+%	\node (N12) at (50.797bp,234.0bp) [draw=black,ellipse] {sqr\_N12};
+%	\node (N13) at (152.8bp,162.0bp) [draw=black,ellipse] {add\_N13};
+%	\node (N10) at (258.8bp,306.0bp) [draw=black,ellipse] {sub\_N10};
+%	\node (N11) at (152.8bp,306.0bp) [draw=black,ellipse] {sub\_N11};
+%	\node (N16) at (258.8bp,234.0bp) [draw=black,ellipse] {sqr\_N16};
+%	\node (N17) at (205.8bp,18.0bp) [draw=black,ellipse] {O0\_N17};
+%	\node (N14) at (258.8bp,162.0bp) [draw=black,ellipse] {add\_N14};
+%	\node (N15) at (152.8bp,234.0bp) [draw=black,ellipse] {sqr\_N15};
+%	\node (N8) at (205.8bp,90.0bp) [draw=black,ellipse] {add\_N8};
+%	\node (N9) at (360.8bp,306.0bp) [draw=black,ellipse] {sub\_N9};
+%	\node (N1) at (205.8bp,378.0bp) [draw=black,ellipse] {I0\_N1};
+%	\node (N2) at (33.797bp,378.0bp) [draw=black,ellipse] {I1\_N2};
+%	\node (N3) at (119.8bp,378.0bp) [draw=black,ellipse] {I2\_N3};
+%	\node (N4) at (291.8bp,378.0bp) [draw=black,ellipse] {I3\_N4};
+%	\node (N5) at (377.8bp,378.0bp) [draw=black,ellipse] {I4\_N5};
+%	\node (N6) at (50.797bp,306.0bp) [draw=black,ellipse] {sub\_N6};
+%	\node (N7) at (358.8bp,234.0bp) [draw=black,ellipse] {sqr\_N7};
+%	\draw [->] (N12) ..controls (87.034bp,208.13bp) and (106.51bp,194.76bp)  .. (N13);
+%	\draw [->] (N5) ..controls (371.79bp,352.26bp) and (369.5bp,342.82bp)  .. (N9);
+%	\draw [->] (N7) ..controls (323.79bp,208.49bp) and (304.58bp,195.05bp)  .. (N14);
+%	\draw [->] (N1) ..controls (187.16bp,352.38bp) and (178.81bp,341.35bp)  .. (N11);
+%	\draw [->] (N8) ..controls (205.8bp,63.983bp) and (205.8bp,54.712bp)  .. (N17);
+%	\draw [->] (N16) ..controls (258.8bp,207.98bp) and (258.8bp,198.71bp)  .. (N14);
+%	\draw [->] (N15) ..controls (152.8bp,207.98bp) and (152.8bp,198.71bp)  .. (N13);
+%	\draw [->] (N13) ..controls (171.89bp,135.78bp) and (180.01bp,125.06bp)  .. (N8);
+%	\draw [->] (N1) ..controls (155.6bp,354.33bp) and (116.15bp,336.51bp)  .. (N6);
+%	\draw [->] (N10) ..controls (258.8bp,279.98bp) and (258.8bp,270.71bp)  .. (N16);
+%	\draw [->] (N4) ..controls (280.13bp,352.25bp) and (275.4bp,342.22bp)  .. (N10);
+%	\draw [->] (N3) ..controls (131.47bp,352.25bp) and (136.19bp,342.22bp)  .. (N11);
+%	\draw [->] (N2) ..controls (39.805bp,352.26bp) and (42.097bp,342.82bp)  .. (N6);
+%	\draw [->] (N6) ..controls (50.797bp,279.98bp) and (50.797bp,270.71bp)  .. (N12);
+%	\draw [->] (N1) ..controls (224.44bp,352.38bp) and (232.79bp,341.35bp)  .. (N10);
+%	\draw [->] (N11) ..controls (152.8bp,279.98bp) and (152.8bp,270.71bp)  .. (N15);
+%	\draw [->] (N9) ..controls (360.08bp,279.98bp) and (359.82bp,270.71bp)  .. (N7);
+%	\draw [->] (N14) ..controls (239.7bp,135.78bp) and (231.59bp,125.06bp)  .. (N8);
+%	\draw [->] (N1) ..controls (256.0bp,354.33bp) and (295.44bp,336.51bp)  .. (N9);
+%	%	
+%	\end{tikzpicture}
+%	\label{dfg}
+%	\hfill
+%		%    \bottomrule
+%	\end{tabular}
+%\end{table}
+
+
+
+
+
+
+%\begin{figure}[!h]
+%	\centering
+%
+%\begin{lstlisting}[columns=fullflexible, language=C]
+%#define SQR(x) ((x)*(x))
+%for(int i=0;i<64;i++)
+%	for(int j=1;j<63;j++)
+%		for (int k=1;k<63;k++)
+%			b[i][j][k] =
+%				SQR(a[i][j][k] - a[i][j][k-1]) +
+%				SQR(a[i][j][k] - a[i][j][k+1]) +
+%				SQR(a[i][j][k] - a[i][j-1][k]) +
+%				SQR(a[i][j][k] - a[i][j+1][k]);
+%\end{lstlisting}
+%	\caption{Application Program}
+%	\label{code_app}
+%\end{figure}
+%
+%
+\begin{figure}[!h]
+%	\captionsetup[subfigure]{justification=centering}
+	\begin{subfigure}[]{}
+		\centering
+\begin{lstlisting}[columns=fullflexible, language=C, backgroundcolor=\color{white}]
+#define SQR(x) ((x)*(x))
+for(int i=0;i<64;i++)
+	for(int j=1;j<63;j++)
+		for (int k=1;k<63;k++)
+			b[i][j][k] =
+				SQR(a[i][j][k] - a[i][j][k-1]) +
+				SQR(a[i][j][k] - a[i][j][k+1]) +
+				SQR(a[i][j][k] - a[i][j-1][k]) +
+				SQR(a[i][j][k] - a[i][j+1][k]);
+		\end{lstlisting}
+%		\caption{Application Program}
+		\label{code}
+	\end{subfigure}	
+	
+	\begin{subfigure}[]{}
+	\centering	
+	\begin{tikzpicture}[>=latex',line join=bevel, scale = 0.38]
+	\centering	
+	\tiny	
+	\node (N12) at (50.797bp,234.0bp) [draw=black,ellipse] {sqr\_N10};
+	\node (N13) at (152.8bp,162.0bp) [draw=black,ellipse] {add\_N14};
+	\node (N10) at (258.8bp,306.0bp) [draw=black,ellipse] {sub\_N8};
+	\node (N11) at (152.8bp,306.0bp) [draw=black,ellipse] {sub\_N7};
+	\node (N16) at (258.8bp,234.0bp) [draw=black,ellipse] {sqr\_N12};
+	\node (N17) at (205.8bp,18.0bp) [draw=black,ellipse] {O0\_N17};
+	\node (N14) at (258.8bp,162.0bp) [draw=black,ellipse] {add\_N15};
+	\node (N15) at (152.8bp,234.0bp) [draw=black,ellipse] {sqr\_N11};
+	\node (N8) at (205.8bp,90.0bp) [draw=black,ellipse] {add\_N16};
+	\node (N9) at (360.8bp,306.0bp) [draw=black,ellipse] {sub\_N9};
+	\node (N1) at (205.8bp,378.0bp) [draw=black,ellipse] {I2\_N3};
+	\node (N2) at (33.797bp,378.0bp) [draw=black,ellipse] {I0\_N1};
+	\node (N3) at (119.8bp,378.0bp) [draw=black,ellipse] {I1\_N2};
+	\node (N4) at (291.8bp,378.0bp) [draw=black,ellipse] {I3\_N4};
+	\node (N5) at (377.8bp,378.0bp) [draw=black,ellipse] {I4\_N5};
+	\node (N6) at (50.797bp,306.0bp) [draw=black,ellipse] {sub\_N6};
+	\node (N7) at (358.8bp,234.0bp) [draw=black,ellipse] {sqr\_N13};
+	\draw [->] (N12) ..controls (87.034bp,208.13bp) and (106.51bp,194.76bp)  .. (N13);
+	\draw [->] (N5) ..controls (371.79bp,352.26bp) and (369.5bp,342.82bp)  .. (N9);
+	\draw [->] (N7) ..controls (323.79bp,208.49bp) and (304.58bp,195.05bp)  .. (N14);
+	\draw [->] (N1) ..controls (187.16bp,352.38bp) and (178.81bp,341.35bp)  .. (N11);
+	\draw [->] (N8) ..controls (205.8bp,63.983bp) and (205.8bp,54.712bp)  .. (N17);
+	\draw [->] (N16) ..controls (258.8bp,207.98bp) and (258.8bp,198.71bp)  .. (N14);
+	\draw [->] (N15) ..controls (152.8bp,207.98bp) and (152.8bp,198.71bp)  .. (N13);
+	\draw [->] (N13) ..controls (171.89bp,135.78bp) and (180.01bp,125.06bp)  .. (N8);
+	\draw [->] (N1) ..controls (155.6bp,354.33bp) and (116.15bp,336.51bp)  .. (N6);
+	\draw [->] (N10) ..controls (258.8bp,279.98bp) and (258.8bp,270.71bp)  .. (N16);
+	\draw [->] (N4) ..controls (280.13bp,352.25bp) and (275.4bp,342.22bp)  .. (N10);
+	\draw [->] (N3) ..controls (131.47bp,352.25bp) and (136.19bp,342.22bp)  .. (N11);
+	\draw [->] (N2) ..controls (39.805bp,352.26bp) and (42.097bp,342.82bp)  .. (N6);
+	\draw [->] (N6) ..controls (50.797bp,279.98bp) and (50.797bp,270.71bp)  .. (N12);
+	\draw [->] (N1) ..controls (224.44bp,352.38bp) and (232.79bp,341.35bp)  .. (N10);
+	\draw [->] (N11) ..controls (152.8bp,279.98bp) and (152.8bp,270.71bp)  .. (N15);
+	\draw [->] (N9) ..controls (360.08bp,279.98bp) and (359.82bp,270.71bp)  .. (N7);
+	\draw [->] (N14) ..controls (239.7bp,135.78bp) and (231.59bp,125.06bp)  .. (N8);
+	\draw [->] (N1) ..controls (256.0bp,354.33bp) and (295.44bp,336.51bp)  .. (N9);	
+	\end{tikzpicture}
+	\label{dfg}
+%	\subcaption{A diagram}
+	\end{subfigure}
+	\caption{(a) Application Program (b) Data Flow Graph}
+	\label{dfgs}
+\end{figure}
+%
+%
+%\begin{figure}[!h]
+%	\centering
+%%	\subfigure[Input DFG]{
+%%		\centering
+%\begin{lstlisting}[columns=fullflexible, language=C]
+%#define SQR(x) ((x)*(x))
+%for(int i=0;i<64;i++)
+%	for(int j=1;j<63;j++)
+%		for (int k=1;k<63;k++)
+%			b[i][j][k] =
+%				SQR(a[i][j][k] - a[i][j][k-1]) +
+%				SQR(a[i][j][k] - a[i][j][k+1]) +
+%				SQR(a[i][j][k] - a[i][j-1][k]) +
+%				SQR(a[i][j][k] - a[i][j+1][k]);
+%\end{lstlisting}
+%\caption{Application Program}
+%\label{code_app}
+%		
+%%	}
+%	\hfill
+%	\subfigure[Node-merging]{
+%		\centering
+%		\begin{tikzpicture}[>=latex',line join=bevel, scale = 0.3]
+%		\tiny%
+%		\node (N8) at (92.0bp,124.5bp) [draw=black,ellipse] {add\_Imm\_5\_N8};
+%		\node (N9) at (46.0bp,10.5bp) [draw=black,ellipse,fill=red!20] {O0\_N9};
+%		\node (N1) at (112.0bp,466.5bp) [draw=black,ellipse,fill=red!20] {I0\_N1};
+%		\node (N2) at (46.0bp,67.5bp) [draw=black,ellipse,fill=red!20] {mul\_N2};
+%		\node (N3) at (102.0bp,238.5bp) [draw=black,ellipse,fill=red!20] {mul\_N3};
+%		\node (N4) at (112.0bp,409.5bp) [draw=black,ellipse,fill=red!20] {mul\_Imm\_16\_N4};
+%		\node (N5) at (112.0bp,352.5bp) [draw=black,ellipse] {mul\_N5};
+%		\node (N6) at (102.0bp,181.5bp) [draw=black,ellipse] {mul\_N6};
+%		\node (N7) at (112.0bp,295.5bp) [draw=black,ellipse] {sub\_Imm\_20\_N7};
+%		\draw [->] (N1) ..controls (146.27bp,446.62bp) and (178.55bp,423.54bp)  .. (167.0bp,399.0bp) .. controls (160.57bp,385.33bp) and (147.79bp,374.36bp)  .. (N5);
+%		\draw [->] (N1) ..controls (159.02bp,444.04bp) and (224.0bp,407.12bp)  .. (224.0bp,353.5bp) .. controls (224.0bp,353.5bp) and (224.0bp,353.5bp)  .. (224.0bp,294.5bp) .. controls (224.0bp,243.78bp) and (166.06bp,209.78bp)  .. (N6);
+%		\draw [->] (N3) ..controls (102.0bp,220.91bp) and (102.0bp,211.14bp)  .. (N6);
+%		\draw [->] (N4) ..controls (112.0bp,391.91bp) and (112.0bp,382.14bp)  .. (N5);
+%		\draw [->] (N5) ..controls (112.0bp,334.91bp) and (112.0bp,325.14bp)  .. (N7);
+%		\draw [->] (N1) ..controls (64.984bp,444.04bp) and (0.0bp,407.12bp)  .. (0.0bp,353.5bp) .. controls (0.0bp,353.5bp) and (0.0bp,353.5bp)  .. (0.0bp,180.5bp) .. controls (0.0bp,144.98bp) and (20.045bp,107.55bp)  .. (N2);
+%		\draw [->] (N7) ..controls (108.98bp,277.91bp) and (107.21bp,268.14bp)  .. (N3);
+%		\draw [->] (N1) ..controls (84.093bp,450.73bp) and (65.284bp,437.6bp)  .. (57.0bp,420.0bp) .. controls (31.453bp,365.71bp) and (34.192bp,340.5bp)  .. (57.0bp,285.0bp) .. controls (62.03bp,272.76bp) and (72.121bp,262.06bp)  .. (N3);
+%		\draw [->] (N8) ..controls (77.444bp,106.1bp) and (68.035bp,94.846bp)  .. (N2);
+%		\draw [->] (N2) ..controls (46.0bp,49.908bp) and (46.0bp,40.144bp)  .. (N9);
+%		\draw [->] (N1) ..controls (112.0bp,448.91bp) and (112.0bp,439.14bp)  .. (N4);
+%		\draw [->] (N6) ..controls (98.983bp,163.91bp) and (97.208bp,154.14bp)  .. (N8);
+%		%
+%	
+%		\end{tikzpicture}
+%		\label{dfg_new}
+%	}
+%
+%
+%	
+%	\caption[]{DSP48E1 aware mapping.}
+%	\label{dfgs}
+%	%\end{minipage}
+%	
+%\end{figure}

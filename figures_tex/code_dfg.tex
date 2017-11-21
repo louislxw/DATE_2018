@@ -1,0 +1,66 @@
+\lstset { %
+	language=C,
+	backgroundcolor=\color{white}, % set backgroundcolor
+	%basicstyle=\footnotesize,% basic font setting
+	%basicstyle=\ttfamily\tiny,
+	basicstyle=\ttfamily\tiny,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	breaklines=true	
+}
+\lstset{framesep=-10pt, xleftmargin=-10pt}
+
+\begin{table}[!h]
+	\centering
+	\caption{DFG Description of the compute kernel}
+	\label{code.tbl}
+	\begin{tabular}{l}
+		%    \toprule
+%		\multicolumn{1}{c}{(a) C description}  &\multicolumn{1}{c}{(b) DFG description} \\ % Assembly with Loopback Optimization
+		%    \midrule
+		%    \hspace{-0.2in}
+		%    \hspace{-0.2in}
+		\begin{lstlisting}
+digraph graphname {
+N1 [ntype="invar", label="I0_N1"];
+N2 [ntype="invar", label="I1_N2"];
+N3 [ntype="invar", label="I2_N3"];
+N4 [ntype="invar", label="I3_N4"];
+N5 [ntype="invar", label="I4_N5"];
+N6 [ntype="operation", label="sub_N6"];
+N7 [ntype="operation", label="sub_N7"];
+N8 [ntype="operation", label="sub_N8"];
+N9 [ntype="operation", label="sub_N9"];
+N10 [ntype="operation", label="sqr_N10"];
+N11 [ntype="operation", label="sqr_N11"];
+N12 [ntype="operation", label="sqr_N12"];
+N13 [ntype="operation", label="sqr_N13"];
+N14 [ntype="operation", label="add_N14"];
+N15 [ntype="operation", label="add_N15"];
+N16 [ntype="operation", label="add_N16"];
+N17 [ntype="outvar", label="O0_N17"];
+N1 -> N6;
+N2 -> N7;
+N3 -> N6;
+N3 -> N7;
+N3 -> N8;
+N3 -> N9;
+N4 -> N8;
+N5 -> N9;
+N6 -> N10;
+N7 -> N11;
+N8 -> N12;
+N9 -> N13;
+N10 -> N14;
+N11 -> N14;
+N12 -> N15;
+N13 -> N15;
+N14 -> N16;
+N15 -> N16;
+N16 -> N17;
+}
+		\end{lstlisting}\\
+		%    \bottomrule
+	\end{tabular}
+\end{table}

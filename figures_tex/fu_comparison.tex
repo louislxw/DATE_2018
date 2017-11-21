@@ -1,0 +1,89 @@
+\pgfplotsset{
+	axis background/.style={fill=white},
+	tick style=black,
+	tick label style=black,
+	grid=both,
+	xtick pos=left,
+	ytick pos=left,
+	tick style={
+		major grid style={style=white,line width=1pt},minor grid style=white,
+		tick align=outside,
+	},
+	minor tick num=4,
+}
+
+\begin{figure}[tb]
+%\vspace{-18pt}
+\centering
+%\pgfplotstableread{
+%	0  5			7     
+%	1  12      		9     
+%	2  8	     	6      
+%	3  22    		8 
+%	4  17    		9      
+%	5  30     		11    
+%	6  28     		13       
+%	7  19      		11
+%}\dataset
+\pgfplotstableread{
+	0  		 5		7     8
+	1  		 12     9     8
+	2  		 8	    6     8 
+	3  		 22    	8 	  8
+	4  	 	 17    	9     8
+	5  		 30     11    8
+	6  		 28     13    8
+	7  		 19     11    8
+}\dataset
+\begin{tikzpicture}
+\centering
+\begin{axis}[ybar=0pt,
+%enlarge x limits=0.05,
+width=17cm,
+x = 0.85cm,
+height=4.3cm,
+ymin=0,
+ymax=100,        
+ylabel={Number of FUs required},
+grid style={dotted,gray},
+ymajorgrids=true,
+nodes near coords,    
+xtick=data,
+bar width = 0.25,
+%xticklabels={1,2,...,26},
+xticklabels = {
+	\strut 1,
+	\strut 2,
+	\strut 3,
+	\strut 4,
+	\strut 5,
+	\strut 6,
+	\strut 7,
+	\strut 8
+%	\strut 26 (1)                                    
+},
+x tick label style={rotate=45, anchor=north east, inner sep=0mm},
+major x tick style = {opacity=0},
+minor x tick num = 1,
+minor tick length=1ex,
+every node near coord/.append style={
+        anchor=west,
+        rotate=90,
+        font=\tiny
+},
+]
+
+\addplot[draw=black,fill=blue!80, draw opacity=1] table[x index=0,y index=1] 
+\dataset; \label{scoverlay}
+\addplot[draw=black,fill=black!70, draw opacity=1] table[x index=0,y index=2] \dataset;\label{tmoverlay_1} 
+\addplot[draw=black,fill=green!60, draw opacity=1] table[x index=0,y index=3] \dataset;\label{tmoverlay_2} 
+
+\end{axis}
+	\node [draw=none, fill=white] at (rel axis cs: 0.5,0.72) {\shortstack[l]{
+			\ref{scoverlay} Spatially Configured Overlay~\cite{jain2015efficient} \\ \ref{tmoverlay_1} V1/V2 \\ \ref{tmoverlay_2} V4}};
+
+\end{tikzpicture}
+\caption{Number of FUs required for the benchmarks.}
+\label{fu_comparison}
+%\vspace{-9pt}
+\end{figure}

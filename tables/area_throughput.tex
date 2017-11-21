@@ -1,0 +1,53 @@
+\begin{table}[tb]
+	\renewcommand{\arraystretch}{1.2}
+	\caption{Area and throughput comparison.}
+
+	\label{area_throughput}
+	\centering
+	%\tiny
+	%\scriptsize 
+	\resizebox{\columnwidth}{!}{
+		\begin{tabular}{cccccccccccc}
+			\toprule
+			No.&
+			Benchmark	&\multicolumn{2}{c}{Proposed Overlay} &\multicolumn{2}{c}{SCFU-SCN overlay~\cite{jain2015efficient}} &\multicolumn{2}{c}{Vivado HLS}			\\
+			\cline{3-8}			                                                                                    	
+			&Name		& Tput		& Area		
+			& Tput		& Area		
+			& Tput		& Area		\\		
+			\midrule	                                                                    	            	                                    	
+		1.&	chebyshev 	& 0.35		& 987				
+			& 2.35		& 1900				
+			& 2.21		& 265		\\
+		2.&	sgfilter  	& 0.54		& 1269				
+			& 6.03		& 4560				
+			& 4.59		& 645		\\
+		3.&	mibench  	& 0.35		& 846				
+			& 4.36		& 3040				
+			& 3.51		& 305		\\
+		4.&	qspline  	& 0.43		& 1128				
+			& 8.71		& 8360				
+			& 6.11		& 1270		\\
+		5.&	poly5		& 0.58		& 1269				
+			& 9.05		& 6460				
+			& 7.02		& 765		\\			
+		6.&	poly6     	& 0.78		& 1551				
+			& 14.74		& 11400				
+			& 11.88		& 1455		\\
+		7.&	poly7     	& 0.69		& 1833				
+			& 13.07		& 10640				
+			& 10.92		& 1025		\\
+		8.&	poly8     	& 0.64		& 1551				
+			& 10.72		& 7220				
+			& 8.32		& 1025		\\
+			
+			
+			\bottomrule	                                                                       
+			
+		\end{tabular}
+	}
+
+\end{table}
+
+
+

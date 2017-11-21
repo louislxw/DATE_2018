@@ -1,0 +1,32 @@
+\begin{table}[tb]
+	\renewcommand{\arraystretch}{1.2}
+	\caption{Comparison of Compute Efficiency}
+	\label{efficiency}
+	\centering
+	%\tiny
+	%\scriptsize 
+	\resizebox{\columnwidth}{!}{
+		\begin{tabular}{ccccc}
+			\toprule
+			& Benchmark	&\multicolumn{3}{c}{Compute Efficiency (GOPS per area per second)} 				\\
+			\cline{3-5}			                                                                                    	
+			No.			& Name		& Proposed Overlay	& Previous Work	& Vivado HLS	 		\\		
+			\midrule	                                                                    	            	                                    	
+			1. 			& chebyshev & 420				& 103			& 0.28		\\
+			2. 			& sgfilter  & 504				& 138			& 0.24		\\
+			3. 			& mibench   & 497				& 166			& 0.38		\\
+			4. 			& qspline   & 455				& 91			& 0.16		\\
+			5.			& poly5     & 540				& 148			& 0.30		\\
+			6.			& poly6     & 593				& 135			& 0.27		\\
+			7.			& poly7     & 445				& 142			& 0.36		\\
+			8.			& poly8     & 489				& 144			& 0.27		\\
+			
+			
+			\bottomrule	                                                                       
+			
+		\end{tabular}
+	}
+\end{table}
+
+
+

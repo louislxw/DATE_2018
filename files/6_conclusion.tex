@@ -1,0 +1,10 @@
+\section{Conclusion}
+\label{ch6_conclusion}
+We have presented an area efficient FPGA overlay with a linear connection of TM FUs based on the Xilinx DSP48E1.
+Interleaving data transfer with instruction execution significantly reduces the II with a resulting increase in throughput.
+Introducing write-back into the FU design allows the overlay depth to be fixed. 
+%Introducing write-back into the FU design and modifying the scheduling strategy allows the overlay depth to be fixed.
+This eliminates the need to reconfigure the overlay if the application kernel changes, making the overlay more general. These changes significantly reduce the latency with just a small decrease in throughput.
+The V3 overlay has the best performance, as for a fixed data bandwidth, it has comparable throughput with a significantly reduced latency.
+
+

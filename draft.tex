@@ -1,0 +1,173 @@
+\documentclass[conference]{IEEEtran}
+%\documentclass[9pt]{sig-alternate}
+
+\makeatletter
+\newif\if@restonecol
+\makeatother
+\let\algorithm\relax
+\let\endalgorithm\relax
+
+\usepackage[ruled]{algorithm2e}
+\usepackage{multirow}
+%\usepackage[center]{caption}
+\usepackage{setspace}
+%\usepackage{amsmath}
+%\usepackage[pdftex]{graphicx}
+%\usepackage{pdfpages}
+\usepackage{multirow}
+\usepackage{todonotes}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{amsmath}
+%\usepackage[ruled]{algorithm2e}
+%\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\sisetup{per=slash, load=abbr}
+
+\usepackage{calc}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{rotating}
+
+
+\usepackage{url}
+\usepackage{pgf}
+\usetikzlibrary{trees}
+\usetikzlibrary{snakes,arrows,shapes}
+
+%\usepackage{amsmath}
+\usepackage{mdwlist}
+%\usepackage[normal]{subfigure}
+%\usepackage{subfig}
+
+\usepackage{textcomp}
+
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{epsfig}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{dot2texi}
+\usepackage{graphicx,stfloats}
+
+\usepackage{graphicx,epstopdf}
+\epstopdfsetup{update}
+
+%\usepackage{listings}% http://ctan.org/pkg/listings
+%\usepackage{subfig}% http://ctan.org/pkg/subfig
+%\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+
+%\usepackage{enumitem}
+\usepackage{enumerate}
+
+%\subfigcapmargin = 3cm
+
+
+\pgfplotsset{compat=newest}
+
+\setlength{\paperheight}{11in}
+\setlength{\paperwidth}{8.5in}
+
+
+%\lstset { %
+%	language=C,
+%	backgroundcolor=\color{black!5}, % set backgroundcolor
+%	%basicstyle=\footnotesize,% basic font setting
+%	basicstyle=\ttfamily\tiny,
+%	%\basicstyle=\ttfamily\scriptsize,
+%	keywordstyle=\color{blue}\ttfamily,
+%	stringstyle=\color{red}\ttfamily,
+%	commentstyle=\color{green}\ttfamily,
+%	breaklines=true
+%}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+\newcommand*{\blind}{}
+
+\begin{document}\sloppy
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+%\title{An Area-Efficient Time-multiplexed FPGA Overlay Architecture using DSP Block based Functional Units}
+\title{A Time-multiplexed FPGA Overlay with Linear Interconnect}
+%\title{Architecture Exploration for the Linear Time-multiplexed FPGA Overlay}
+%\author{\IEEEauthorblockN{Xiangwei Li, Abhishek Kumar Jain, Douglas L. Maskell, Suhaib A. Fahmy}\\
+%\IEEEauthorblockA{School of Computer Engineering, Nanyang Technological University, Singapore\\
+%\{xli045, abhishek013\}@e.ntu.edu.sg, \{asdouglas, sfahmy\}@ntu.edu.sg}\\}
+
+
+\author{\IEEEauthorblockN{Xiangwei Li}
+	\IEEEauthorblockA{SCSE\\
+		NTU Singapore\\
+		xli045@e.ntu.edu.sg}
+	\and
+	\IEEEauthorblockN{Abhishek Kumar Jain}
+	\IEEEauthorblockA{Lawrence Livermore \\ National Lab., USA\\
+		jain7@llnl.gov}
+	\and
+	\IEEEauthorblockN{Douglas L. Maskell}
+	\IEEEauthorblockA{SCSE\\
+		NTU Singapore\\
+		asdouglas@ntu.edu.sg}
+	\and
+	\IEEEauthorblockN{Suhaib A. Fahmy}
+	\IEEEauthorblockA{School of Engineering\\
+		University of Warwick, UK\\
+		s.fahmy@warwick.ac.uk}}
+
+
+% make the title area
+\maketitle
+%\setlength{\baselineskip}{10.3pt}
+
+\begin{abstract}
+Coarse-grained overlays improve FPGA design productivity by providing fast compilation and software like programmability. Soft processor based overlays with well-defined ISAs are attractive to application developers due to their ease of use. However, these overlays have significant FPGA resource overheads. Time multiplexed (TM) CGRA-like overlays represent an interesting alternative as they are able to change their behavior on a cycle by cycle basis while the compute kernel executes. This reduces the FPGA resource needed, but at the cost of a higher initiation interval (II) and hence reduced throughput.
+
+%Current CGRA-like overlays have a high resource overhead due to the implementation of a fully flexible routing network. However, many application kernels are acyclic and can be implemented using a much simpler linear feed-forward routing network. 
+The fully flexible routing network of current CGRA-like overlays results in high FPGA resource usage. However, many application kernels are acyclic and can be implemented using a much simpler linear feed-forward routing network. This paper examines a DSP block based TM overlay with linear interconnect where the overlay architecture takes account of the application kernels' characteristics and the underlying FPGA architecture, so as to minimize the II and the FPGA resource usage. We examine a number of architectural extensions to the DSP block based functional unit to improve the II, throughput and latency. 
+The results show an average 70\% reduction in II, with corresponding improvements in throughput and latency. 
+
+\begin{comment}
+The proposed overlays are relatively efficient consuming just 5-8\% of the Zync resources while operating at close to the maximum DSP frequency. Application kernels mapped to the overlay result in an average 70\% reduction in II compared to the overlay in~\cite{li2016area}, with improvements in throughput and latency.
+
+\end{comment}
+
+%Coarse grained FPGA overlay architectures have emerged as an attractive solution for improving accelerator design productivity by offering fast compilation and software-like programmability. Throughput oriented spatially-configurable FPGA overlays can deliver maximum performance at the cost of significant resource requirement due to the use of one functional unit for each compute kernel operation. Alternatively, time-multiplexing the FU within an overlay architecture can significantly reduce the FU and interconnect resource requirements but at the cost of a higher initiation interval (II). Such a time-multiplexed overlay with its reduced FPGA resource requirements can be thought of as a rapidly reconfigurable data-flow accelerator within a large accelerator framework allowing the remainder of the FPGA fabric to be utilized for other purposes. However, the exact architecture of such a time-multiplexed overlay needs to be carefully designed taking into account the characteristics of the application kernels and the underlying FPGA architecture, so as to minimize the II and FPGA resource usage for improving the throughput per unit area. This paper examines the possibility of minimizing the II while adding minimal resources in the overlay FU so that throughput per unit area can be improved. We demonstrate significant reduction in II by using architectural optimizations such as the use of rotating register files which allows overlapping of data communication and computation. We also propose replication of the execution datapath while sharing the fetch/decode/control hardware and instruction memory to improve the compute density of the FU. The results presented show a quadruple reduction in II while only doubling the FPGA resource consumption resulting in improved throughput per unit area.
+
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+Reconfigurable system, overlay architecture, FPGA
+%field programmable gate arrays.
+\end{IEEEkeywords}
+
+
+%\IEEEpeerreviewmaketitle
+
+\pagenumbering{arabic}
+\input{files/1_introduction}
+\input{files/2_related_work}
+\input{files/3_architecture}
+\input{files/4_tool}
+\input{files/5_experiments}
+\input{files/6_conclusion}
+
+
+\def\IEEEbibitemsep{1pt plus 1pt}
+%\footnotesize
+%\scriptsize
+\bibliographystyle{abbrv}
+%\bibliographystyle{acm}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{sigproc,files/references}
+
+
+% that's all folks
+\end{document}
+
+
