@@ -10,7 +10,7 @@ This involves, DFG extraction from high-level compute kernels, scheduling the DF
 On Zynq, the ARM processor loads the kernel configuration into the overlay pipeline and initiates kernel execution.
 Our mapping flow is described below using the previous example.
 
-\textbf{\textit{Kernel Mapping:}} The open source HercuLeS HLS tool~\cite{kavvadias2013hardware} is used to transform a `C' description of the compute kernel to a DFG description, where nodes represent operations and edges represent data flow between operations, as shown in Fig.~\ref{dfg}.
+\textbf{\textit{Kernel Mapping:}} The HercuLeS HLS tool~\cite{kavvadias2013hardware} is used to transform a `C' description of the compute kernel to a DFG description, where nodes represent operations and edges represent data flow between operations, as shown in Fig.~\ref{dfg}.
 For the V1 and V2 based overlays, ASAP scheduling is used which results in no data dependencies between operations at the same scheduling stage, as in~\cite{li2016area}, with nodes in each scheduling stage then being allocated to a single V1 or V2 FU for execution. 
 The set of instructions from the sequenced DFG is identified, then the cycle-by-cycle execution pattern is formed which interleaves load/store and arithmetic/ALU operations, as shown in Table~\ref{schedule}. 
 For the `gradient' benchmark, the II is reduced from 11 (in~\cite{li2016area}) to 6 (V1) or 3 (V2) with the same ASAP scheduling.
