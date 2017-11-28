@@ -34,16 +34,17 @@ Here, the set of instructions from the sequenced DFG is identified, then the cyc
 \end{comment}
 
 
-\begin{table}[b]
+\begin{table}[tb]
 	\renewcommand{\arraystretch}{1}
 	\caption{First 32 cycles of the `gradient' schedule (II=6).}
 	\label{schedule}
 	\centering
-	\scriptsize
+%	\scriptsize
+	\footnotesize
 	\resizebox{\columnwidth}{!}{
 		\begin{tabular}{lllllllll}
 			\toprule
-			cycle & \multicolumn{2}{c}{FU0} & \multicolumn{2}{c}{FU1} & \multicolumn{2}{c}{FU2} & \multicolumn{2}{c}{FU4} \\ \midrule
+			cyc & \multicolumn{2}{c}{FU0} & \multicolumn{2}{c}{FU1} & \multicolumn{2}{c}{FU2} & \multicolumn{2}{c}{FU4} \\ \midrule
 			1     & Load R0 &               &         &               &         &               &         &  \\
 			2     & Load R1 &               &         &               &         &               &         &  \\
 			3     & Load R2 &               &         &               &         &               &         &  \\
